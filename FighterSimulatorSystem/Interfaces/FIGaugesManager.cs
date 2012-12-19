@@ -7,7 +7,7 @@ using System.Timers;
 namespace FighterSimulatorSystem.Interfaces
 {
     /// <summary>
-    /// Flight Illusiona gauges manager
+    /// Flight Illusions gauges manager
     /// </summary>
     public class FIGaugesManager
     {
@@ -55,7 +55,7 @@ namespace FighterSimulatorSystem.Interfaces
                 _serialPort = new SerialPort();
 
                 // Allow the user to set the appropriate properties.
-                _serialPort.PortName = "COM4";
+                _serialPort.PortName = "COM5";
                 _serialPort.BaudRate = 38400;
                 _serialPort.Parity = Parity.None;
                 _serialPort.DataBits = 8;
@@ -162,20 +162,20 @@ namespace FighterSimulatorSystem.Interfaces
 
                     // set attitude indicator (103 0x67)  
                     //set bank
-                    val = CalculatePos(-FSS.simconnect.simData["AHorizon_Bank"] * 180 / 3.14,
+                    val = CalculatePos(FSS.simconnect.simData["AHorizon_Bank"] * 180 / 3.14,
                         -180, 180, 0, 3850);
                     cmd = ComposeCmd(GAUGES.ATTITUDE, COMMANDS.SET_VALUE, val);
                     Array.Copy(cmd, 0, buffer, 6, 6);
 
                     //set pitch
-                    val = CalculatePos(-FSS.simconnect.simData["AHorizon_Pitch"] * 180 / 3.14,
+                    val = CalculatePos(FSS.simconnect.simData["AHorizon_Pitch"] * 180 / 3.14,
                         -25, 25, 0, 660);
                     cmd = ComposeCmd(GAUGES.ATTITUDE, COMMANDS.SET_NEEDLE1_POS, val);
                     Array.Copy(cmd, 0, buffer, 12, 6);
 
                     // Set compass (105 0x69)
                     // set heading
-                    val = CalculatePos(FSS.simconnect.simData["GyroHeading"],
+                    val = CalculatePos(FSS.simconnect.simData["GyroHeading"] * 180 / 3.14,
                         0, 360, 0, 4350);
                     cmd = ComposeCmd(GAUGES.COMPASS, COMMANDS.SET_NEEDLE1_POS, val);
                     Array.Copy(cmd, 0, buffer, 18, 6);
@@ -187,12 +187,12 @@ namespace FighterSimulatorSystem.Interfaces
                     //Array.Copy(cmd, 0, buffer, 24, 6);
 
                     // Set VOR1 (106 0x70)
-                    // set localizer needle
-//                    val = CalculatePos(FSS.simconnect.simData.AdiIlsVerPos,
-//                        -FSS.simconnect.simData.halfDeviationLimit, FSS.simconnect.simData.halfDeviationLimit, 0, 944);
-//                    cmd = ComposeCmd(GAUGES.VOR1, COMMANDS.SET_NEEDLE1_POS, val);
-//                    Array.Copy(cmd, 0, buffer, 30, 6);
-//
+                    // set localizer needle -- currently use for slipball p-51d
+                    val = CalculatePos(FSS.simconnect.simData["Slipball"],
+                        -1, 1, 0, 944);
+                    cmd = ComposeCmd(GAUGES.VOR1, COMMANDS.SET_NEEDLE1_POS, val);
+                    Array.Copy(cmd, 0, buffer, 30, 6);
+
 //                    // set GS needle
 //                    val = CalculatePos(FSS.simconnect.simData.AdiIlsHorPos,
 //                        -FSS.simconnect.simData.halfDeviationLimit, FSS.simconnect.simData.halfDeviationLimit, 0, 944);

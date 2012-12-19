@@ -24,7 +24,7 @@ namespace FighterSimulatorSystem.Interfaces
 
         // local state of simulator
         public bool isTest = false;                        // test is pressed
-        public int mainPower = 0;                          // no main power 
+        public int mainPower = 1;                          // no main power 
 
         public Dictionary<string, float> simData;          // holds JSON data from the sim
 

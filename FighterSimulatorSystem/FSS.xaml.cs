@@ -82,7 +82,7 @@ namespace FighterSimulatorSystem
                 // init interfaces
                 figauges = new FIGaugesManager();
 
-                //phidgets = new PhidgetManager();
+                phidgets = new PhidgetManager();
 
                 //g15 = new G15Manager();
 
